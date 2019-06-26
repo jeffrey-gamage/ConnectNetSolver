@@ -95,21 +95,13 @@ bool ConnectFourGame::HasConnectedFourHere( int col, int row, WhichPlayer lastPl
 {
 	if (board[col][row] == lastPlayed)
 	{
-		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::up) >= 4)
+		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::up) + DetectConnectLength(lastPlayed, col, row, 0, ConnectFourGame::ConnectDirection::down) >= 4)
 			return true; 
-		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::up_right) >= 4)
+		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::up_right)+ DetectConnectLength(lastPlayed, col, row, 0, ConnectFourGame::ConnectDirection::down_left) >= 4)
 			return true;
-		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::right) >= 4)
+		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::right) + DetectConnectLength(lastPlayed, col, row, 0, ConnectFourGame::ConnectDirection::left) >= 4)
 			return true;
-		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::down_right) >= 4)
-			return true;
-		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::down) >= 4)
-			return true;
-		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::down_left) >= 4)
-			return true;
-		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::left) >= 4)
-			return true;
-		if (DetectConnectLength(lastPlayed, col, row, 1, ConnectFourGame::ConnectDirection::up_left) >= 4)
+		if (DetectConnectLength(lastPlayed,  col, row, 1, ConnectFourGame::ConnectDirection::down_right)+ DetectConnectLength(lastPlayed, col, row, 0, ConnectFourGame::ConnectDirection::up_left) >= 4)
 			return true;
 		return false;
 	}

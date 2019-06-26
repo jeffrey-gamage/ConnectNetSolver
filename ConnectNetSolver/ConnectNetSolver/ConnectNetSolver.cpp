@@ -4,35 +4,30 @@
 #include "pch.h"
 #include <iostream>
 #include "ConnectFourGame.h"
+#include "HumanConnectFourPlayer.h"
+#include "ConnectFourPlayer.h"
 
 int main()
 {
 	ConnectFourGame testGame = ConnectFourGame();
+	HumanConnectFourPlayer player1 = HumanConnectFourPlayer();
+	player1.isPlayerOne = true;
+	HumanConnectFourPlayer player2 = HumanConnectFourPlayer();
+	player2.isPlayerOne = false;
     std::cout << "Welcome to ConnectNetSolver!\n"; 
-	testGame.PlayPiece(0, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(1, false);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(1, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(2, false);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(2, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(3, false);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(2, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(3, false);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(3, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(4, false);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(3, true);
-	testGame.DisplayBoard();
-	testGame.PlayPiece(5, false);
-	testGame.DisplayBoard();
+
+	while (!testGame.isGameOver)
+	{
+		std::cout << "Player 1, ";
+		player1.MakeMove(&testGame,0);
+		testGame.DisplayBoard();
+		if (!testGame.isGameOver)
+		{
+			std::cout << "Player 2, ";
+			player2.MakeMove(&testGame,0);
+			testGame.DisplayBoard();
+		}
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

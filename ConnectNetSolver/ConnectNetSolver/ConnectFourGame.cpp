@@ -21,6 +21,8 @@ ConnectFourGame::~ConnectFourGame()
 
 bool ConnectFourGame::IsLegalMove(int columnToPlay)
 {
+	if (columnToPlay < 0 || columnToPlay>6)
+		return false;
 	return board[columnToPlay][6] == WhichPlayer::neither;
 }
 
@@ -30,11 +32,11 @@ void ConnectFourGame::PlayPiece(int columnToPlay, bool isPlayerOne)
 	while (board[columnToPlay][row] != WhichPlayer::neither) { row++; }
 	if (isPlayerOne) { 
 		board[columnToPlay][row] = WhichPlayer::player1;
-		CheckForGameOver(WhichPlayer::player1, columnToPlay, row);
+		isGameOver = CheckForGameOver(WhichPlayer::player1, columnToPlay, row);
 	}
 	else { 
 		board[columnToPlay][row] = WhichPlayer::player2;
-		CheckForGameOver(WhichPlayer::player2, columnToPlay, row);
+		isGameOver = CheckForGameOver(WhichPlayer::player2, columnToPlay, row);
 	}
 }
 
@@ -123,9 +125,9 @@ bool ConnectFourGame::AreAllColumnsFull()
 	for (int col = 0; col < 7; col++)
 	{
 		if (IsLegalMove(col))
-			return true;
+			return false;
 	}
-	return false;
+	return true;
 }
 
 bool ConnectFourGame::IsConnectionEnded( int col, int row ,ConnectDirection direction, WhichPlayer lastPlayed)

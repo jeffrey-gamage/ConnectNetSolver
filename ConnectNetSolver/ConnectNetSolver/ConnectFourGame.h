@@ -13,6 +13,7 @@ public:
 	void DisplayBoard();
 	bool CheckForGameOver(WhichPlayer LastPlayed, int row, int col);
 	WhichPlayer GetWinner();
+	bool isGameOver = false;
 
 private:	
 	enum class ConnectDirection {

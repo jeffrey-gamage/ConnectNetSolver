@@ -6,13 +6,14 @@
 #include "ConnectFourGame.h"
 #include "HumanConnectFourPlayer.h"
 #include "ConnectFourPlayer.h"
+#include "AIConnectFourPlayer.h"
 
 int main()
 {
 	ConnectFourGame testGame = ConnectFourGame();
 	HumanConnectFourPlayer player1 = HumanConnectFourPlayer();
 	player1.isPlayerOne = true;
-	HumanConnectFourPlayer player2 = HumanConnectFourPlayer();
+	AIConnectFourPlayer player2 = AIConnectFourPlayer();
 	player2.isPlayerOne = false;
     std::cout << "Welcome to ConnectNetSolver!\n"; 
 
@@ -23,7 +24,6 @@ int main()
 		testGame.DisplayBoard();
 		if (!testGame.isGameOver)
 		{
-			std::cout << "Player 2, ";
 			player2.MakeMove(&testGame,0);
 			testGame.DisplayBoard();
 		}

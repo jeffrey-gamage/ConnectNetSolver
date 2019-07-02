@@ -1,10 +1,22 @@
 #include "pch.h"
 #include "ConnectNeuralNet.h"
 #include <cstdlib>
+#include "Perceptron.h"
+#include "BaseLayerPerceptron.h"
+#include <vector>
+#include <iostream>
+#include <time.h>
 
 
 ConnectNeuralNet::ConnectNeuralNet()
 {
+	srand(time(NULL));
+	for (int i = 0; i < 7; i++)
+	{
+		baseLayer[i] = BaseLayerPerceptron();
+		hiddenLayer[i] = Perceptron();
+		outputLayer[i] = Perceptron();
+	}
 }
 
 
@@ -12,17 +24,23 @@ ConnectNeuralNet::~ConnectNeuralNet()
 {
 }
 
-std::list<float> ConnectNeuralNet::GenerateMoves(ConnectFourGame * CurrentGame)
+std::vector<float> ConnectNeuralNet::GenerateMoves(ConnectFourGame * currentGame)
 {
-	std::list<float> movesList = std::list<float>();
+	std::vector<float> baseOutputs= std::vector<float>(7,0);
+	game = currentGame;
 	for (int i = 0; i < 7; i++)
 	{
-		movesList.push_front(RandomFloat());
+		baseLayer[i].SetInputs(i, game);
+		baseOutputs[i] = (baseLayer[i].GetOutput());
 	}
-	return movesList;
-}
-
-float ConnectNeuralNet::RandomFloat()
-{
-	return  static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	std::vector<float> hiddenOutputs = std::vector<float>(7, 0);
+	for (int j = 0; j < 7; j++)
+	{
+		hiddenOutputs[j] = (hiddenLayer[j].GetOutput(baseOutputs));
+	}	std::vector<float> finalOutputs = std::vector<float>(7, 0);
+	for (int k = 0; k < 7; k++)
+	{
+		finalOutputs[k] = (outputLayer[k].GetOutput(baseOutputs));
+	}
+	return finalOutputs;
 }

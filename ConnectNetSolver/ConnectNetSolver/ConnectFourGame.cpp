@@ -143,6 +143,7 @@ bool ConnectFourGame::IsConnectionEnded( int col, int row ,ConnectDirection dire
 	case ConnectFourGame::ConnectDirection::up_left: {
 		return row - 1 < 0 || col - 1 < 0 || board[col-1][row-1] != lastPlayed; }
 	}
+	return false;
 }
 
 bool ConnectFourGame::CheckForGameOver(WhichPlayer lastPlayed, int col,int row)

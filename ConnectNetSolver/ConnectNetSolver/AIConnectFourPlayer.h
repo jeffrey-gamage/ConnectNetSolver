@@ -1,7 +1,7 @@
 #pragma once
 #include "ConnectFourPlayer.h"
 #include "ConnectNeuralNet.h"
-#include <list>
+#include <vector>
 class ConnectFourGame;
 class ConnectNeuralNet;
 
@@ -14,7 +14,7 @@ public:
 
 private:
 	virtual int SelectMove(ConnectFourGame* currentGame, int nthChoice) override;
-	std::list<int> GetPickOrder(std::list<float> preferences);
+	std::vector<int> GetPickOrder(std::vector<float> preferences);
 	ConnectNeuralNet neuralNet;
 };
 

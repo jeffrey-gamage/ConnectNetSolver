@@ -1,5 +1,7 @@
 #pragma once
-#include <list>
+#include <vector>
+#include "Perceptron.h"
+#include "BaseLayerPerceptron.h"
 class ConnectFourGame;
 class ConnectNeuralNet
 {
@@ -7,9 +9,13 @@ public:
 	ConnectNeuralNet();
 	~ConnectNeuralNet();
 
-	std::list<float> GenerateMoves(ConnectFourGame* CurrentGame);
+	std::vector<float> GenerateMoves(ConnectFourGame* CurrentGame);
 
-private:
-	float RandomFloat();
+
+private:	
+	Perceptron outputLayer[7];
+	Perceptron hiddenLayer[7];
+	BaseLayerPerceptron baseLayer[7];
+	ConnectFourGame* game;
 };
 

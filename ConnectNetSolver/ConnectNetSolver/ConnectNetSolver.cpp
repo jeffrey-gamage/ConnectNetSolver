@@ -7,9 +7,11 @@
 #include "HumanConnectFourPlayer.h"
 #include "ConnectFourPlayer.h"
 #include "AIConnectFourPlayer.h"
+#include <time.h>
 
 int main()
 {
+	srand(time(NULL));
 	ConnectFourGame testGame = ConnectFourGame();
 	HumanConnectFourPlayer player1 = HumanConnectFourPlayer();
 	player1.isPlayerOne = true;
@@ -17,6 +19,19 @@ int main()
 	player2.isPlayerOne = false;
     std::cout << "Welcome to ConnectNetSolver!\n"; 
 
+	//machine learning function test
+	player2.MultiplyNet();
+	std::cout << "prime has best score \n";
+	player2.RefineNet(12,13,-1);
+
+	std::cout << "plus has best score\n";
+	player2.RefineNet(-12, -13, -19);
+
+	std::cout << "minus has best score\n";
+	player2.RefineNet(19, 13, 49);
+
+	//above should identify and select net with highest score
+	//should select: prime, plus, minus
 	while (!testGame.isGameOver)
 	{
 		std::cout << "Player 1, ";

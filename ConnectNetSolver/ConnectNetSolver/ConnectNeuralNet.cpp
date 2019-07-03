@@ -5,12 +5,10 @@
 #include "BaseLayerPerceptron.h"
 #include <vector>
 #include <iostream>
-#include <time.h>
 
 
 ConnectNeuralNet::ConnectNeuralNet()
 {
-	srand(time(NULL));
 	for (int i = 0; i < 7; i++)
 	{
 		baseLayer[i] = BaseLayerPerceptron();
@@ -43,4 +41,17 @@ std::vector<float> ConnectNeuralNet::GenerateMoves(ConnectFourGame * currentGame
 		finalOutputs[k] = (outputLayer[k].GetOutput(baseOutputs));
 	}
 	return finalOutputs;
+}
+
+void ConnectNeuralNet::BecomeClone(ConnectNeuralNet netToClone)
+{
+	for (int perceptronIndex = 0; perceptronIndex < 7; perceptronIndex++)
+	{
+		for (int weightIndex = 0; weightIndex < 7; weightIndex++)
+		{
+			baseLayer[perceptronIndex].SetWeight(netToClone.baseLayer[perceptronIndex].GetWeight(weightIndex),weightIndex);
+			hiddenLayer[perceptronIndex].SetWeight(netToClone.hiddenLayer[perceptronIndex].GetWeight(weightIndex), weightIndex);
+			outputLayer[perceptronIndex].SetWeight(netToClone.outputLayer[perceptronIndex].GetWeight(weightIndex), weightIndex);
+		}
+	}
 }

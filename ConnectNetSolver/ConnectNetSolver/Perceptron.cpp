@@ -42,3 +42,9 @@ float Perceptron::GetWeight(int index)
 {
 	return weights[index];
 }
+
+void Perceptron::SetWeight(float newWeight, int index)
+{
+	weights[index] = newWeight;
+}
+

@@ -11,6 +11,7 @@ public:
 	float GetOutput(std::vector<float> inputs);
 
 	float GetWeight(int index);
+	void SetWeight(float newWeight, int index);
 
 private:
 	std::vector<float> weights;

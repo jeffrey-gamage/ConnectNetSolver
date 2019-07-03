@@ -11,11 +11,12 @@ public:
 
 	std::vector<float> GenerateMoves(ConnectFourGame* CurrentGame);
 
+	void BecomeClone(ConnectNeuralNet netToClone);
 
-private:	
 	Perceptron outputLayer[7];
 	Perceptron hiddenLayer[7];
 	BaseLayerPerceptron baseLayer[7];
+private:	
 	ConnectFourGame* game;
 };
 

@@ -19,19 +19,27 @@ int main()
 	player2.isPlayerOne = false;
     std::cout << "Welcome to ConnectNetSolver!\n"; 
 
-	//machine learning function test
+	////machine learning function test
+	//player2.MultiplyNet();
+	//std::cout << "prime has best score \n";
+	//player2.RefineNet(12,13,-1);
+
+	//std::cout << "plus has best score\n";
+	//player2.RefineNet(-12, -13, -19);
+
+	//std::cout << "minus has best score\n";
+	//player2.RefineNet(19, 13, 49);
+	////above should identify and select net with highest score
+	////should select: prime, plus, minus
+
+
+	//neural net file read/write test
+	//state should be the same before and after
 	player2.MultiplyNet();
-	std::cout << "prime has best score \n";
-	player2.RefineNet(12,13,-1);
+	player2.WriteToFile("testNeuralNet");
+	player2.ReadFromFile("testNeuralNet");
 
-	std::cout << "plus has best score\n";
-	player2.RefineNet(-12, -13, -19);
-
-	std::cout << "minus has best score\n";
-	player2.RefineNet(19, 13, 49);
-
-	//above should identify and select net with highest score
-	//should select: prime, plus, minus
+	//gameplay test
 	while (!testGame.isGameOver)
 	{
 		std::cout << "Player 1, ";

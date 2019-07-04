@@ -2,6 +2,7 @@
 #include "ConnectFourPlayer.h"
 #include "ConnectNeuralNet.h"
 #include <vector>
+#include <string>
 class ConnectFourGame;
 class ConnectNeuralNet;
 
@@ -21,6 +22,9 @@ public:
 		int index;//address of perceptron
 		int weight;//which weight of perceptron to tweak
 	};
+
+	void WriteToFile(std::string fileName);
+	void ReadFromFile(std::string fileName);
 
 	void MultiplyNet(); //select weights to tweak and test plus and minus, from prime. plus and minus nets will be overwritten
 	void RefineNet(int plusScore, int primeScore, int minusScore); //the net with the best score becomes the prime net

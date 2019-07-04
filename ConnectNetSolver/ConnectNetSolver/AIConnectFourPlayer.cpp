@@ -2,6 +2,7 @@
 #include "AIConnectFourPlayer.h"
 #include <vector>
 #include <iostream>
+#include <fstream>
 #include "ConnectNeuralNet.h"
 
 AIConnectFourPlayer::AIConnectFourPlayer()
@@ -12,6 +13,56 @@ AIConnectFourPlayer::AIConnectFourPlayer()
 
 AIConnectFourPlayer::~AIConnectFourPlayer()
 {
+}
+
+void AIConnectFourPlayer::WriteToFile(std::string fileName)
+{
+	std::ofstream saveStateStream;
+	saveStateStream.open(fileName,std::ios::trunc);
+	for (int pIndex = 0; pIndex < 7; pIndex++)
+	{
+		for (int wIndex = 0; wIndex < 7; wIndex++)
+		{
+			saveStateStream << primeNet.baseLayer[pIndex].GetWeight(wIndex) << "\n";
+			saveStateStream << primeNet.hiddenLayer[pIndex].GetWeight(wIndex) << "\n";
+			saveStateStream << primeNet.outputLayer[pIndex].GetWeight(wIndex) << "\n";
+		}
+	}
+	saveStateStream.close();
+}
+
+void AIConnectFourPlayer::ReadFromFile(std::string fileName)
+{
+	std::ifstream loadStateStream;
+	loadStateStream.open(fileName);		
+	if (loadStateStream.is_open())
+	{
+		for (int pIndex = 0; pIndex < 7; pIndex++)
+		{
+
+			for (int wIndex = 0; wIndex < 7; wIndex++)
+			{
+				std::string weightString;
+				if (std::getline(loadStateStream, weightString))
+				{
+					std::cout << pIndex<<" / "<<wIndex<<" : "<<weightString;
+					primeNet.baseLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
+				}
+				if (std::getline(loadStateStream, weightString))
+				{
+					std::cout << pIndex << " / " << wIndex << " : " << weightString;
+					primeNet.hiddenLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
+				}
+				if (std::getline(loadStateStream, weightString))
+				{
+					std::cout << pIndex << " / " << wIndex << " : " << weightString;
+					primeNet.outputLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
+				}
+				std::cout<< "\n";
+			}
+		}
+	}
+	loadStateStream.close();
 }
 
 void AIConnectFourPlayer::MultiplyNet()
@@ -49,12 +100,10 @@ void AIConnectFourPlayer::MultiplyNet()
 
 void AIConnectFourPlayer::RefineNet(int plusScore, int primeScore, int minusScore)
 {
-	DisplayWeightsBeingUpdated();
 	if (plusScore > primeScore&&plusScore > minusScore)
 		primeNet = plusNet;
 	else if (minusScore > primeScore &&minusScore > plusScore)
 		primeNet = minusNet;
-	DisplayWeightsBeingUpdated();
 	MultiplyNet();
 }
 

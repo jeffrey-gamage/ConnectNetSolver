@@ -34,6 +34,8 @@ public:
 
 	void DisplayWeightsBeingUpdated(); //testing function to verify if weights are being updated correctly
 
+	void BecomeMutatedClone(AIConnectFourPlayer playerToCopy);
+
 private:
 	virtual int SelectMove(ConnectFourGame* currentGame, int nthChoice) override;
 	int SelectMovePlus(ConnectFourGame* currentGame, int nthChoice);

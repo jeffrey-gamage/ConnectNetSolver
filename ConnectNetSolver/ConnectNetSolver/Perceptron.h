@@ -5,7 +5,7 @@ class Perceptron
 public:
 	Perceptron();
 	~Perceptron();
-	float RandomFloat();
+	static float RandomFloat();
 
 
 	float GetOutput(std::vector<float> inputs);

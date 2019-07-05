@@ -143,6 +143,15 @@ void AIConnectFourPlayer::DisplayWeightsBeingUpdated()
 	std::cout << "\n";
 }
 
+void AIConnectFourPlayer::BecomeMutatedClone(AIConnectFourPlayer playerToCopy)
+{
+	primeNet.BecomeClone(playerToCopy.primeNet);
+	batchSize = playerToCopy.batchSize + (rand() % 3 )- 1;
+	if (batchSize < 1) batchSize = 1;
+	learningRate = playerToCopy.learningRate * (0.5f + Perceptron::RandomFloat());
+	MultiplyNet();
+}
+
 int AIConnectFourPlayer::SelectMove(ConnectFourGame * currentGame, int nthChoice)
 {
 	std::vector<float> preferences = primeNet.GenerateMoves(currentGame);

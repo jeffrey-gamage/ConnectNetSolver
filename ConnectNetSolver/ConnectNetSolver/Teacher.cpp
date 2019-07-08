@@ -32,6 +32,21 @@ void Teacher::Generations(std::string leagueName, int numGenerations)
 	}
 }
 
+void Teacher::ExhibitionMatch(std::string leagueName)
+{
+	//TODO --see header
+}
+
+void Teacher::Challenge(std::string leagueName)
+{
+	//TODO --see header
+}
+
+void Teacher::InterLeagueTest(std::string league1, std::string league2)
+{
+	//TODO --see header
+}
+
 void Teacher::Generation()
 {
 	GameModerator moderator = GameModerator();

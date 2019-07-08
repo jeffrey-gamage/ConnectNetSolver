@@ -8,16 +8,17 @@
 #include "ConnectFourPlayer.h"
 #include "AIConnectFourPlayer.h"
 #include <time.h>
+#include "Teacher.h"
 
 int main()
 {
-	srand(time(NULL));
+	srand(time(NULL));/*
 	ConnectFourGame testGame = ConnectFourGame();
 	HumanConnectFourPlayer player1 = HumanConnectFourPlayer();
 	player1.isPlayerOne = true;
 	AIConnectFourPlayer player2 = AIConnectFourPlayer();
 	player2.isPlayerOne = false;
-    std::cout << "Welcome to ConnectNetSolver!\n"; 
+    std::cout << "Welcome to ConnectNetSolver!\n"; */
 
 	////machine learning function test
 	//player2.MultiplyNet();
@@ -32,25 +33,9 @@ int main()
 	////above should identify and select net with highest score
 	////should select: prime, plus, minus
 
+	Teacher teacher = Teacher();
+	teacher.Generations("generationsTest", 20);
 
-	//neural net file read/write test
-	//state should be the same before and after
-	player2.MultiplyNet();
-	player2.WriteToFile("testNeuralNet");
-	player2.ReadFromFile("testNeuralNet");
-
-	//gameplay test
-	while (!testGame.isGameOver)
-	{
-		std::cout << "Player 1, ";
-		player1.MakeMove(&testGame,0);
-		testGame.DisplayBoard();
-		if (!testGame.isGameOver)
-		{
-			player2.MakeMove(&testGame,0);
-			testGame.DisplayBoard();
-		}
-	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

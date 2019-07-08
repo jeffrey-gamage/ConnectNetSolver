@@ -45,20 +45,16 @@ void AIConnectFourPlayer::ReadFromFile(std::string fileName)
 				std::string weightString;
 				if (std::getline(loadStateStream, weightString))
 				{
-					std::cout << pIndex<<" / "<<wIndex<<" : "<<weightString;
 					primeNet.baseLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
 				}
 				if (std::getline(loadStateStream, weightString))
 				{
-					std::cout << pIndex << " / " << wIndex << " : " << weightString;
 					primeNet.hiddenLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
 				}
 				if (std::getline(loadStateStream, weightString))
 				{
-					std::cout << pIndex << " / " << wIndex << " : " << weightString;
 					primeNet.outputLayer[pIndex].SetWeight(std::stof(weightString), wIndex);
 				}
-				std::cout<< "\n";
 			}
 		}
 	}

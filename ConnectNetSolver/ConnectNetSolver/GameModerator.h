@@ -1,12 +1,13 @@
 #pragma once
 #include "ConnectFourPlayer.h"
+#include "AIConnectFourPlayer.h"
 class GameModerator
 {
 public:
 	GameModerator();
 	~GameModerator();
 
-	void PlayGame(ConnectFourPlayer player1, ConnectFourPlayer player2);
+	void PlayGame(AIConnectFourPlayer player1, AIConnectFourPlayer player2);
 	int GetPlayer1Score();
 	int GetPlayer2Score();
 

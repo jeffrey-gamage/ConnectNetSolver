@@ -34,7 +34,7 @@ int main()
 	////should select: prime, plus, minus
 
 	Teacher teacher = Teacher();
-	teacher.Generations("generationsTest", 20);
+	teacher.Generations("generationsTest", 4);
 
 }
 

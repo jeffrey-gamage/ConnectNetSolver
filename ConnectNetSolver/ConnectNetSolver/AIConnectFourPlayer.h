@@ -16,21 +16,29 @@ public:
 	float learningRate = 0.2f;
 	int batchSize = 3;
 
+	int primeScore = 0;
+	int plusScore = 0;
+	int minusScore = 0;
+
 	struct PerceptronWeightSelector
 	{
 		int layer;//0 for base, 1 for hidden, 2 for output
 		int index;//address of perceptron
 		int weight;//which weight of perceptron to tweak
 	};
+	enum class WhichNet
+	{
+		prime,plus,minus
+	};
+	WhichNet activeNet = WhichNet::prime;
 
 	void WriteToFile(std::string fileName);
 	void ReadFromFile(std::string fileName);
 
+	void ResetScores();
+	int GetTotalScore();
 	void MultiplyNet(); //select weights to tweak and test plus and minus, from prime. plus and minus nets will be overwritten
-	void RefineNet(int plusScore, int primeScore, int minusScore); //the net with the best score becomes the prime net
-
-	void MakeMovePlus(ConnectFourGame* currentGame, int numTries);//uses + modified version of net to generate move
-	void MakeMoveMinus(ConnectFourGame* currentGame, int numTries);// uses - modified version of net to generate move
+	void RefineNet(); //the net with the best score becomes the prime net
 
 	void DisplayWeightsBeingUpdated(); //testing function to verify if weights are being updated correctly
 
@@ -38,8 +46,6 @@ public:
 
 private:
 	virtual int SelectMove(ConnectFourGame* currentGame, int nthChoice) override;
-	int SelectMovePlus(ConnectFourGame* currentGame, int nthChoice);
-	int SelectMoveMinus(ConnectFourGame* currentGame, int nthChoice);
 	std::vector<int> GetPickOrder(std::vector<float> preferences);
 	ConnectNeuralNet primeNet;
 	ConnectNeuralNet plusNet;

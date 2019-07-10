@@ -61,6 +61,18 @@ void AIConnectFourPlayer::ReadFromFile(std::string fileName)
 	loadStateStream.close();
 }
 
+void AIConnectFourPlayer::ResetScores()
+{
+	primeScore = 0;
+	plusScore = 0;
+	minusScore = 0;
+}
+
+int AIConnectFourPlayer::GetTotalScore()
+{
+	return primeScore + plusScore + minusScore;
+}
+
 void AIConnectFourPlayer::MultiplyNet()
 {
 	plusNet = ConnectNeuralNet();
@@ -94,21 +106,13 @@ void AIConnectFourPlayer::MultiplyNet()
 	}
 }
 
-void AIConnectFourPlayer::RefineNet(int plusScore, int primeScore, int minusScore)
+void AIConnectFourPlayer::RefineNet()
 {
 	if (plusScore > primeScore&&plusScore > minusScore)
 		primeNet = plusNet;
 	else if (minusScore > primeScore &&minusScore > plusScore)
 		primeNet = minusNet;
 	MultiplyNet();
-}
-
-void AIConnectFourPlayer::MakeMovePlus(ConnectFourGame * currentGame, int numTries)
-{
-}
-
-void AIConnectFourPlayer::MakeMoveMinus(ConnectFourGame * currentGame, int numTries)
-{
 }
 
 void AIConnectFourPlayer::DisplayWeightsBeingUpdated()
@@ -150,30 +154,24 @@ void AIConnectFourPlayer::BecomeMutatedClone(AIConnectFourPlayer playerToCopy)
 
 int AIConnectFourPlayer::SelectMove(ConnectFourGame * currentGame, int nthChoice)
 {
-	std::vector<float> preferences = primeNet.GenerateMoves(currentGame);
-	if (nthChoice >= 7) {
-		std::cout << "all options rejected! Game should be over.\n";
-		return 1;
+	std::vector<float> preferences;
+	switch (activeNet) {
+		case WhichNet::prime:{ 
+			preferences = primeNet.GenerateMoves(currentGame); 
+			break; 
+		}
+		case WhichNet::plus:{
+			preferences = plusNet.GenerateMoves(currentGame);
+			break;
+		}
+		case WhichNet::minus:{
+			preferences = minusNet.GenerateMoves(currentGame);
+			break; 
+		}
 	}
-		//get the best reccomendation from the net
-	std::vector<int> pickOrder = GetPickOrder(preferences);
-	return pickOrder.at(nthChoice);
-}int AIConnectFourPlayer::SelectMovePlus(ConnectFourGame * currentGame, int nthChoice)
-{
-	std::vector<float> preferences = plusNet.GenerateMoves(currentGame);
 	if (nthChoice >= 7) {
 		std::cout << "all options rejected! Game should be over.\n";
-		return 1;
-	}
-	//get the best reccomendation from the net
-	std::vector<int> pickOrder = GetPickOrder(preferences);
-	return pickOrder.at(nthChoice);
-}int AIConnectFourPlayer::SelectMoveMinus(ConnectFourGame * currentGame, int nthChoice)
-{
-	std::vector<float> preferences = minusNet.GenerateMoves(currentGame);
-	if (nthChoice >= 7) {
-		std::cout << "all options rejected! Game should be over.\n";
-		return 1;
+		return rand()%7;
 	}
 	//get the best reccomendation from the net
 	std::vector<int> pickOrder = GetPickOrder(preferences);
@@ -195,7 +193,7 @@ std::vector<int> AIConnectFourPlayer::GetPickOrder(std::vector<float> preference
 				minAddress = j;
 		}
 		pickOrder[i] = maxAddress;
-		preferences[maxAddress] = preferences[minAddress] - 0.000001f;
+		preferences[maxAddress] = preferences[minAddress] - 0.0001f;
 	}
 	return pickOrder;
 }

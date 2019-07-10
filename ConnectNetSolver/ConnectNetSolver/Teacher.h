@@ -29,7 +29,6 @@ private:
 	//rate of the copy
 
 	AIConnectFourPlayer league[7];
-	int scores[7];
 
 };
 

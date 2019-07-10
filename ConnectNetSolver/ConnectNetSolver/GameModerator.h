@@ -7,7 +7,7 @@ public:
 	GameModerator();
 	~GameModerator();
 
-	void PlayGame(AIConnectFourPlayer player1, AIConnectFourPlayer player2);
+	void PlayLearningGame(AIConnectFourPlayer player1, AIConnectFourPlayer player2);
 	int GetPlayer1Score();
 	int GetPlayer2Score();
 
@@ -15,7 +15,12 @@ private:
 	int player1Score;
 	int player2Score;
 
-	const int WinBaseScore = 100;
-	const int LoseBaseScore = -100;
+	struct scores {
+		int p1Score;
+		int p2Score;
+	};
+
+	scores GetScores(ConnectFourGame* game, int turnsTaken);
+	void PlaySelectedNets(AIConnectFourPlayer player1, AIConnectFourPlayer player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net);
 };
 

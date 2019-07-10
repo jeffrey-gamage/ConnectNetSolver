@@ -52,15 +52,15 @@ void Teacher::Generation()
 	GameModerator moderator = GameModerator();
 	for (int i = 0; i < 7; i++)
 	{
-		scores[i] = 0;
+		league[i].ResetScores();
 	}
 	for (int player1Index = 0; player1Index < 6; player1Index++)
 	{
 		for (int player2Index = player1Index + 1; player2Index < 7; player2Index++)
 		{
-			moderator.PlayGame(league[player1Index], league[player2Index]);
-			scores[player1Index] += moderator.GetPlayer1Score();
-			scores[player2Index] += moderator.GetPlayer2Score();
+			moderator.PlayLearningGame(league[player1Index], league[player2Index]);
+			league[player1Index].RefineNet();
+			league[player2Index].RefineNet();
 		}
 	}
 	Mutate();
@@ -72,9 +72,9 @@ void Teacher::Mutate()
 	int maxAddress = 0;
 	for (int i = 1; i < 7; i++)
 	{
-		if (scores[i] > scores[maxAddress])
+		if (league[i].GetTotalScore() > league[maxAddress].GetTotalScore())
 			maxAddress = i;
-		if (scores[i] < scores[minAddress])
+		if (league[i].GetTotalScore() < league[minAddress].GetTotalScore())
 			minAddress = i;
 	}
 	AIConnectFourPlayer mutatedClone = AIConnectFourPlayer();

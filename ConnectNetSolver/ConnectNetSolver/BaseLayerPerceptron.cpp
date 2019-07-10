@@ -25,10 +25,8 @@ float BaseLayerPerceptron::GetOutput()
 	float output = 0.f;
 	for (int i = 0; i < 7; i++)
 	{
-		std::cout << this->GetWeight(i) << " ";
 		output += this->GetWeight(i)*ConvertToFloat(game->board[myColumn][i]);
 	}
-	std::cout << output << "\n";
 	return output;
 }
 

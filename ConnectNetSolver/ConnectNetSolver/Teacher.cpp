@@ -15,11 +15,7 @@ Teacher::~Teacher()
 
 void Teacher::Generations(std::string leagueName, int numGenerations)
 {
-	for (int i = 0; i < 7; i++)
-	{
-		league[i] = AIConnectFourPlayer();
-		league[i].ReadFromFile(leagueName + std::to_string(i));
-	}
+	LoadLeague(leagueName);
 	while (numGenerations > 0)
 	{
 		Generation();
@@ -44,7 +40,29 @@ void Teacher::Challenge(std::string leagueName)
 
 void Teacher::InterLeagueTest(std::string league1, std::string league2)
 {
-	//TODO --see header
+	LoadLeague(league1);
+	AIConnectFourPlayer challengerLeague[7];	
+	for (int i = 0; i < 7; i++)
+	{
+		challengerLeague[i] = AIConnectFourPlayer();
+		challengerLeague[i].ReadFromFile(league2 + std::to_string(i));
+	}
+	GameModerator moderator = GameModerator();
+	long league1score=0;
+	long league2score = 0;
+	for (int i = 0; i < 7; i++)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			league[i].ResetScores();
+			challengerLeague[j].ResetScores();
+			moderator.PlayLearningGame(&league[i], &challengerLeague[j]);
+			league1score += league[i].GetTotalScore();
+			league2score += challengerLeague[j].GetTotalScore();
+		}
+	}
+	std::cout << league1 << " score: " << league1score << "\n";
+	std::cout << league2 << " score: " << league2score << "\n";
 }
 
 void Teacher::Generation()
@@ -58,12 +76,21 @@ void Teacher::Generation()
 	{
 		for (int player2Index = player1Index + 1; player2Index < 7; player2Index++)
 		{
-			moderator.PlayLearningGame(league[player1Index], league[player2Index]);
+			moderator.PlayLearningGame(&league[player1Index], &league[player2Index]);
 			league[player1Index].RefineNet();
 			league[player2Index].RefineNet();
 		}
 	}
 	Mutate();
+}
+
+void Teacher::LoadLeague(std::string leagueName)
+{
+	for (int i = 0; i < 7; i++)
+	{
+		league[i] = AIConnectFourPlayer();
+		league[i].ReadFromFile(leagueName + std::to_string(i));
+	}
 }
 
 void Teacher::Mutate()

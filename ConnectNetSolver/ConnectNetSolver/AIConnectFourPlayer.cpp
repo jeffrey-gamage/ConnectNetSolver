@@ -109,9 +109,13 @@ void AIConnectFourPlayer::MultiplyNet()
 void AIConnectFourPlayer::RefineNet()
 {
 	if (plusScore > primeScore&&plusScore > minusScore)
+	{
 		primeNet = plusNet;
+	}
 	else if (minusScore > primeScore &&minusScore > plusScore)
+	{
 		primeNet = minusNet;
+	}
 	MultiplyNet();
 }
 

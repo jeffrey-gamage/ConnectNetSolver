@@ -34,7 +34,8 @@ int main()
 	////should select: prime, plus, minus
 
 	Teacher teacher = Teacher();
-	teacher.Generations("generationsTest", 4);
+	teacher.Generations("functionalTest1", 1);
+	//teacher.InterLeagueTest("functionalTest1", "weakNet");
 
 }
 

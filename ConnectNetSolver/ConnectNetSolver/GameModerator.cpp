@@ -2,6 +2,7 @@
 #include "GameModerator.h"
 #include "ConnectFourGame.h"
 #include "AIConnectFourPlayer.h"
+#include <iostream>
 
 
 GameModerator::GameModerator()
@@ -46,42 +47,42 @@ GameModerator::scores GameModerator::GetScores(ConnectFourGame* game, int turnsT
 	return scores;
 }
 
-void GameModerator::PlaySelectedNets(AIConnectFourPlayer player1, AIConnectFourPlayer player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net)
+void GameModerator::PlaySelectedNets(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net)
 {
 	ConnectFourGame game = ConnectFourGame();
-	player1.isPlayerOne = true;
-	player2.isPlayerOne = false;
+	player1->isPlayerOne = true;
+	player2->isPlayerOne = false;
 	int turnsTaken = 0;
-	player1.activeNet = p1net;
-	player2.activeNet = p2net;
+	player1->activeNet = p1net;
+	player2->activeNet = p2net;
 	while (!game.isGameOver)
 	{
-		player1.MakeMove(&game, 0);
+		player1->MakeMove(&game, 0);
 		turnsTaken++;
 		if (!game.isGameOver)
 		{
-			player2.MakeMove(&game, 0);
+			player2->MakeMove(&game, 0);
 			turnsTaken++;
 		}
 	}
 	scores scores = GetScores(&game, turnsTaken);
 	switch (p1net) {
-	case AIConnectFourPlayer::WhichNet::prime: {player1.primeScore += scores.p1Score; break; }
-	case AIConnectFourPlayer::WhichNet::plus: {player1.plusScore += scores.p1Score; break; }
-	case AIConnectFourPlayer::WhichNet::minus: {player1.minusScore += scores.p1Score; break; }
+	case AIConnectFourPlayer::WhichNet::prime: {player1->primeScore += scores.p1Score; break; }
+	case AIConnectFourPlayer::WhichNet::plus: {player1->plusScore += scores.p1Score; break; }
+	case AIConnectFourPlayer::WhichNet::minus: {player1->minusScore += scores.p1Score; break; }
 	}
 	switch (p2net) {
-	case AIConnectFourPlayer::WhichNet::prime: {player2.primeScore += scores.p1Score; break; }
-	case AIConnectFourPlayer::WhichNet::plus: {player2.plusScore += scores.p1Score; break; }
-	case AIConnectFourPlayer::WhichNet::minus: {player2.minusScore += scores.p1Score; break; }
+	case AIConnectFourPlayer::WhichNet::prime: {player2->primeScore += scores.p2Score; break; }
+	case AIConnectFourPlayer::WhichNet::plus: {player2->plusScore += scores.p2Score; break; }
+	case AIConnectFourPlayer::WhichNet::minus: {player2->minusScore += scores.p2Score; break; }
 	}
 }
 
-void GameModerator::PlayLearningGame(AIConnectFourPlayer player1, AIConnectFourPlayer player2)
+void GameModerator::PlayLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2)
 {
 	if (rand() % 2 == 0)//randomize starting player
 	{
-		AIConnectFourPlayer temp = player1;
+		AIConnectFourPlayer* temp = player1;
 		player1 = player2;
 		player2 = temp;
 	}

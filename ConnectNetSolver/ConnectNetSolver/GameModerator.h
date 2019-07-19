@@ -7,7 +7,7 @@ public:
 	GameModerator();
 	~GameModerator();
 
-	void PlayLearningGame(AIConnectFourPlayer player1, AIConnectFourPlayer player2);
+	void PlayLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2);
 	int GetPlayer1Score();
 	int GetPlayer2Score();
 
@@ -21,6 +21,6 @@ private:
 	};
 
 	scores GetScores(ConnectFourGame* game, int turnsTaken);
-	void PlaySelectedNets(AIConnectFourPlayer player1, AIConnectFourPlayer player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net);
+	void PlaySelectedNets(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net);
 };
 

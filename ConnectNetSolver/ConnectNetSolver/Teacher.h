@@ -25,6 +25,8 @@ private:
 	void Generation(); // all nets play a game against each other network in the league then the 
 	//net with the lowest score is replaced by a mutated copy of the net with the highest score
 
+	void LoadLeague(std::string leagueName);
+
 	void Mutate(); // creates a copy of the most successful net, varying the batch size and learning
 	//rate of the copy
 

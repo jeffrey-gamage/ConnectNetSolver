@@ -151,9 +151,6 @@ bool ConnectFourGame::CheckForGameOver(WhichPlayer lastPlayed, int col,int row)
 	if (HasConnectedFourHere(col,row, lastPlayed))
 	{
 		winner = lastPlayed;
-		if (lastPlayed == WhichPlayer::player1)
-			std::cout << "player 1 wins!\n";
-		else std::cout << "player 2 wins!\n";
 		return true;
 	}
 	return AreAllColumnsFull();

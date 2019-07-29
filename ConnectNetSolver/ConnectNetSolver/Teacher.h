@@ -5,6 +5,7 @@
 class Teacher
 {
 public:
+	const int LEAGUE_SIZE = 8;
 	Teacher();
 	~Teacher();
 
@@ -25,12 +26,14 @@ private:
 	void Generation(); // all nets play a game against each other network in the league then the 
 	//net with the lowest score is replaced by a mutated copy of the net with the highest score
 
+	static void ScheduleLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2); //helper function to schedule league learning games asynchronously
+
 	void LoadLeague(std::string leagueName);
 
 	void Mutate(); // creates a copy of the most successful net, varying the batch size and learning
 	//rate of the copy
 
-	AIConnectFourPlayer league[7];
+	AIConnectFourPlayer league[8];
 
 };
 

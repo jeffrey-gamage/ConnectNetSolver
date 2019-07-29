@@ -156,7 +156,25 @@ void AIConnectFourPlayer::BecomeMutatedClone(AIConnectFourPlayer playerToCopy)
 	MultiplyNet();
 }
 
-int AIConnectFourPlayer::SelectMove(ConnectFourGame * currentGame, int nthChoice)
+void AIConnectFourPlayer::MakeMove(ConnectFourGame* currentGame, int numTries, AIConnectFourPlayer::WhichNet activeNet)
+{
+	int nextMove;
+	nextMove = SelectMove(currentGame, numTries,activeNet);
+	{
+		if (!currentGame->IsLegalMove(nextMove))
+		{
+			if (!currentGame->isGameOver)
+				MakeMove(currentGame, numTries + 1, activeNet);
+			else std::cout << "Game is over!\n";
+		}
+		else
+		{
+			currentGame->PlayPiece(nextMove, isPlayerOne);
+		}
+	}
+}
+
+int AIConnectFourPlayer::SelectMove(ConnectFourGame * currentGame, int nthChoice, AIConnectFourPlayer::WhichNet activeNet)
 {
 	std::vector<float> preferences;
 	switch (activeNet) {

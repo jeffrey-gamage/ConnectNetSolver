@@ -30,7 +30,8 @@ public:
 	{
 		prime,plus,minus
 	};
-	WhichNet activeNet = WhichNet::prime;
+
+	virtual void MakeMove(ConnectFourGame * currentGame, int numTries, AIConnectFourPlayer::WhichNet activeNet);
 
 	void WriteToFile(std::string fileName);
 	void ReadFromFile(std::string fileName);
@@ -45,7 +46,7 @@ public:
 	void BecomeMutatedClone(AIConnectFourPlayer playerToCopy);
 
 private:
-	virtual int SelectMove(ConnectFourGame* currentGame, int nthChoice) override;
+	virtual int SelectMove(ConnectFourGame* currentGame, int nthChoice, WhichNet activeNet);
 	std::vector<int> GetPickOrder(std::vector<float> preferences);
 	ConnectNeuralNet primeNet;
 	ConnectNeuralNet plusNet;

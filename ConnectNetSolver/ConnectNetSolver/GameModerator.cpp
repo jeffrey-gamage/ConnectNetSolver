@@ -3,6 +3,7 @@
 #include "ConnectFourGame.h"
 #include "AIConnectFourPlayer.h"
 #include <iostream>
+#include <thread>
 
 
 GameModerator::GameModerator()
@@ -50,18 +51,14 @@ GameModerator::scores GameModerator::GetScores(ConnectFourGame* game, int turnsT
 void GameModerator::PlaySelectedNets(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net)
 {
 	ConnectFourGame game = ConnectFourGame();
-	player1->isPlayerOne = true;
-	player2->isPlayerOne = false;
 	int turnsTaken = 0;
-	player1->activeNet = p1net;
-	player2->activeNet = p2net;
 	while (!game.isGameOver)
 	{
-		player1->MakeMove(&game, 0);
+		player1->MakeMove(&game, 0,p1net);
 		turnsTaken++;
 		if (!game.isGameOver)
 		{
-			player2->MakeMove(&game, 0);
+			player2->MakeMove(&game, 0,p2net);
 			turnsTaken++;
 		}
 	}
@@ -86,13 +83,54 @@ void GameModerator::PlayLearningGame(AIConnectFourPlayer* player1, AIConnectFour
 		player1 = player2;
 		player2 = temp;
 	}
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::prime);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::prime);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::prime);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::plus);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::plus);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::plus);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::minus);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::minus);
-	PlaySelectedNets(player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::minus);
+	player1->isPlayerOne = true;
+	player2->isPlayerOne = false;
+
+	std::thread game1(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::prime);
+	std::thread game2(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::plus);
+	std::thread game3(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::minus);
+	
+	game1.join();
+	game2.join();
+	game3.join();
+	
+	std::thread game4(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::plus);
+	std::thread game5(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::minus);
+	std::thread game6(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::prime);
+	
+	game4.join();
+	game5.join();
+	game6.join();
+	
+	std::thread game7(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::prime, AIConnectFourPlayer::WhichNet::minus);
+	std::thread game8(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::plus, AIConnectFourPlayer::WhichNet::prime);
+	std::thread game9(PlaySelectedNets, player1, player2, AIConnectFourPlayer::WhichNet::minus, AIConnectFourPlayer::WhichNet::plus);
+
+	game7.join();
+	game8.join();
+	game9.join();
+}
+
+void GameModerator::PlayVersusHuman(HumanConnectFourPlayer * player1, AIConnectFourPlayer * player2)
+{
+	ConnectFourGame game = ConnectFourGame();
+	player1->isPlayerOne = true;
+	player2->isPlayerOne = false;
+	if (rand() % 2 == 0)
+	{
+		player1->isPlayerOne = false;
+		player2->isPlayerOne = true;
+		player2->MakeMove(&game, 0, AIConnectFourPlayer::WhichNet::prime);
+		game.DisplayBoard();
+	}
+	while (!game.isGameOver)
+	{
+		player1->MakeMove(&game, 0);
+		game.DisplayBoard();
+		if (!game.isGameOver)
+		{
+			player2->MakeMove(&game, 0, AIConnectFourPlayer::WhichNet::prime);
+			game.DisplayBoard();
+		}
+	}
 }

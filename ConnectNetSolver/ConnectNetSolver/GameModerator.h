@@ -1,6 +1,7 @@
 #pragma once
 #include "ConnectFourPlayer.h"
 #include "AIConnectFourPlayer.h"
+#include "HumanConnectFourPlayer.h"
 class GameModerator
 {
 public:
@@ -8,6 +9,7 @@ public:
 	~GameModerator();
 
 	void PlayLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2);
+	void PlayVersusHuman(HumanConnectFourPlayer* player1, AIConnectFourPlayer* player2);
 	int GetPlayer1Score();
 	int GetPlayer2Score();
 
@@ -20,7 +22,7 @@ private:
 		int p2Score;
 	};
 
-	scores GetScores(ConnectFourGame* game, int turnsTaken);
-	void PlaySelectedNets(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net);
+	static scores GetScores(ConnectFourGame* game, int turnsTaken);
+	static void PlaySelectedNets(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2,AIConnectFourPlayer::WhichNet p1net, AIConnectFourPlayer::WhichNet p2net);
 };
 

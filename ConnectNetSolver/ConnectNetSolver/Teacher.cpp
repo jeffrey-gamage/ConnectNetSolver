@@ -21,10 +21,7 @@ void Teacher::Generations(std::string leagueName, int numGenerations)
 		numGenerations--;
 		std::cout << numGenerations<<"generations left \n";
 	}
-	for (int i = 0; i < LEAGUE_SIZE; i++)
-	{
-		league[i].WriteToFile(leagueName + std::to_string(i));
-	}
+	SaveLeague(leagueName);
 }
 
 void Teacher::ExhibitionMatch(std::string leagueName)
@@ -108,6 +105,14 @@ void Teacher::LoadLeague(std::string leagueName)
 	{
 		league[i] = AIConnectFourPlayer();
 		league[i].ReadFromFile(leagueName + std::to_string(i));
+	}
+}
+
+void Teacher::SaveLeague(std::string leagueName)
+{
+	for (int i = 0; i < LEAGUE_SIZE; i++)
+	{
+		league[i].WriteToFile(leagueName + std::to_string(i));
 	}
 }
 

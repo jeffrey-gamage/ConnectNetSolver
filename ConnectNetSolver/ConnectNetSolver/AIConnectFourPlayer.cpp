@@ -19,9 +19,9 @@ void AIConnectFourPlayer::WriteToFile(std::string fileName)
 {
 	std::ofstream saveStateStream;
 	saveStateStream.open(fileName,std::ios::trunc);
-	for (int pIndex = 0; pIndex < 7; pIndex++)
+	for (int pIndex = 0; pIndex < 14; pIndex++)
 	{
-		for (int wIndex = 0; wIndex < 7; wIndex++)
+		for (int wIndex = 0; wIndex < 14; wIndex++)
 		{
 			saveStateStream << primeNet.baseLayer[pIndex].GetWeight(wIndex) << "\n";
 			saveStateStream << primeNet.hiddenLayer[pIndex].GetWeight(wIndex) << "\n";
@@ -37,10 +37,10 @@ void AIConnectFourPlayer::ReadFromFile(std::string fileName)
 	loadStateStream.open(fileName);		
 	if (loadStateStream.is_open())
 	{
-		for (int pIndex = 0; pIndex < 7; pIndex++)
+		for (int pIndex = 0; pIndex < 14; pIndex++)
 		{
 
-			for (int wIndex = 0; wIndex < 7; wIndex++)
+			for (int wIndex = 0; wIndex < 14; wIndex++)
 			{
 				std::string weightString;
 				if (std::getline(loadStateStream, weightString))
@@ -240,12 +240,12 @@ std::vector<AIConnectFourPlayer::PerceptronWeightSelector> AIConnectFourPlayer::
 
 std::vector<AIConnectFourPlayer::PerceptronWeightSelector> AIConnectFourPlayer::GetAllNodes()
 {
-	std::vector<AIConnectFourPlayer::PerceptronWeightSelector> allNodes = std::vector<AIConnectFourPlayer::PerceptronWeightSelector>(147);
-	for (int i = 0; i < 147; i++)
+	std::vector<AIConnectFourPlayer::PerceptronWeightSelector> allNodes = std::vector<AIConnectFourPlayer::PerceptronWeightSelector>(588);
+	for (int i = 0; i < 588; i++)
 	{
-		allNodes[i].index = (i/7) % 7;
-		allNodes[i].layer = i / 49;
-		allNodes[i].weight = i % 7;
+		allNodes[i].index = (i/14) % 14;
+		allNodes[i].layer = i / 196;
+		allNodes[i].weight = i % 14;
 	}
 	return allNodes;
 }

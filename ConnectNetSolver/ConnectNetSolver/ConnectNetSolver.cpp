@@ -9,37 +9,69 @@
 #include "AIConnectFourPlayer.h"
 #include <time.h>
 #include "Teacher.h"
-
+#include <string>
+#include <stdexcept>
+std::string GetInput()
+{
+	std::string command = "";
+	std::getline(std::cin, command);
+	return command;
+}
 int main()
 {
-	srand(time(NULL));/*
-	ConnectFourGame testGame = ConnectFourGame();
-	HumanConnectFourPlayer player1 = HumanConnectFourPlayer();
-	player1.isPlayerOne = true;
-	AIConnectFourPlayer player2 = AIConnectFourPlayer();
-	player2.isPlayerOne = false;
-    std::cout << "Welcome to ConnectNetSolver!\n"; */
-
-	////machine learning function test
-	//player2.MultiplyNet();
-	//std::cout << "prime has best score \n";
-	//player2.RefineNet(12,13,-1);
-
-	//std::cout << "plus has best score\n";
-	//player2.RefineNet(-12, -13, -19);
-
-	//std::cout << "minus has best score\n";
-	//player2.RefineNet(19, 13, 49);
-	////above should identify and select net with highest score
-	////should select: prime, plus, minus
-
+	srand(time(NULL));
 	Teacher teacher = Teacher();
-	//teacher.Generations("bigNetTest2", 2000);
-	//teacher.InterLeagueTest("bigNetTest2", "bigNetTest");
-	teacher.ExhibitionMatch("bigNetTest2");
-
-	//teacher.Challenge("champion");
-
+	std::string input;
+	std::cout << "Welcome to ConnectNetSolver! Please choose an option:\n";
+	do {
+		std::cout << "train, challenge, spectate, clone, help, or quit.\n";
+		input = GetInput();
+		if (input == "train")
+		{
+			std::cout << "enter the name of the AI you wish to train. If it does not exist, it will be created.\n Do not use names ending with a numeral.\n";
+			std::string leagueName = GetInput();
+			try {
+				std::cout << "enter the number of generations to train: ";
+				int numGenerations = std::stoi(GetInput());
+				teacher.Generations(leagueName, numGenerations);
+			}
+			catch(const std::invalid_argument& invArg){
+				std::cout << "invalid input!\n";
+			}
+		}
+		else if (input == "challenge")
+		{
+			std::cout << "enter the name of the AI you want to challenge.\n";
+			std::string leagueName = GetInput();
+			teacher.Challenge(leagueName);
+		}
+		else if (input == "spectate")
+		{
+			std::cout << "enter the name of the AI you want to spectate.\n";
+			std::string leagueName = GetInput();
+			teacher.ExhibitionMatch(leagueName);
+		}
+		else if (input == "clone")
+		{
+			std::cout << "enter the name of the AI you want to copy.\n";
+			std::string oldName = GetInput();
+			std::cout << "enter a new name for the copy. Do not use names ending with a numeral.\n";
+			std::string newName = GetInput();
+			teacher.LoadLeague(oldName);
+			teacher.SaveLeague(newName);
+		}
+		else if (input == "help")
+		{
+			std::cout << "train: allow the selected AI to practice against each other for n generations.\nIf no AI exists by that name, create a new one.";
+			std::cout << "challenge: play against the selected AI.\n"; 
+			std::cout << "spectate: watch 2 AI from the selected group play against each other\n";
+			std::cout << "clone: save a copy of the chosen AI with a new name\n";
+		}
+		else if (input != "quit")
+		{
+			std::cout << "command not recognized. Please try again.\n";
+		}
+	} while (input != "quit");
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -36,9 +36,9 @@ std::vector<float> ConnectNeuralNet::GenerateMoves(ConnectFourGame * currentGame
 	{
 		hiddenOutputs[j] = (hiddenLayer[j].GetOutput(baseOutputs));
 	}	std::vector<float> finalOutputs = std::vector<float>(14, 0);
-	for (int k = 0; k < 14; k++)
+	for (int k = 0; k < 7; k++)
 	{
-		finalOutputs[k] = (outputLayer[k].GetOutput(hiddenOutputs));
+		finalOutputs[k] = outputLayer[k].GetOutput(hiddenOutputs)+outputLayer[k+7].GetOutput(hiddenOutputs);
 	}
 	return finalOutputs;
 }

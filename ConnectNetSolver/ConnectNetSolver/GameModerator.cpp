@@ -134,3 +134,29 @@ void GameModerator::PlayVersusHuman(HumanConnectFourPlayer * player1, AIConnectF
 		}
 	}
 }
+
+void GameModerator::PlayExhibitionGame(AIConnectFourPlayer * player1, AIConnectFourPlayer * player2)
+{
+	ConnectFourGame game = ConnectFourGame();
+	player1->isPlayerOne = true;
+	player2->isPlayerOne = false;
+	if (rand() % 2 == 0)
+	{
+		player1->isPlayerOne = false;
+		player2->isPlayerOne = true;
+		player2->MakeMove(&game, 0, AIConnectFourPlayer::WhichNet::prime);
+		game.DisplayBoard();
+	}
+	while (!game.isGameOver)
+	{
+		player1->MakeMove(&game, 0, AIConnectFourPlayer::WhichNet::prime);
+		game.DisplayBoard();
+		system("PAUSE");
+		if (!game.isGameOver)
+		{
+			player2->MakeMove(&game, 0, AIConnectFourPlayer::WhichNet::prime);
+			game.DisplayBoard();
+			system("PAUSE");
+		}
+	}
+}

@@ -10,6 +10,7 @@ public:
 
 	void PlayLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2);
 	void PlayVersusHuman(HumanConnectFourPlayer* player1, AIConnectFourPlayer* player2);
+	void PlayExhibitionGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2);
 	int GetPlayer1Score();
 	int GetPlayer2Score();
 

@@ -16,7 +16,7 @@ public:
 	void ExhibitionMatch(std::string leagueName); // have the two top-ranked nets in the league play a game with the board state piped
 	//to stdout
 
-	void Challenge(std::string leagueName); // play a game against the highest-ranked net in the league
+	void Challenge(std::string leagueName); // play a game against a net in the selected league
 
 	void InterLeagueTest(std::string league1, std::string league2); //have each net in league1 play each net in league2, 
 	//then output the aggregate scores of each league to stdout

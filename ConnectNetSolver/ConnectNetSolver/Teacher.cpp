@@ -29,7 +29,9 @@ void Teacher::Generations(std::string leagueName, int numGenerations)
 
 void Teacher::ExhibitionMatch(std::string leagueName)
 {
-	//TODO --see header
+	LoadLeague(leagueName);
+	GameModerator moderator = GameModerator();
+	moderator.PlayExhibitionGame(&league[0], &league[1]);
 }
 
 void Teacher::Challenge(std::string leagueName)

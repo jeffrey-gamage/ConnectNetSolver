@@ -13,10 +13,11 @@ public:
 
 	void BecomeClone(ConnectNeuralNet netToClone);
 
-	Perceptron outputLayer[7];
-	Perceptron hiddenLayer[7];
-	BaseLayerPerceptron baseLayer[7];
+	Perceptron outputLayer[14];
+	Perceptron hiddenLayer[14];
+	BaseLayerPerceptron baseLayer[14];
 private:	
 	ConnectFourGame* game;
+	std::vector<BaseLayerPerceptron::gameCoords> GetBaseLayerInputs(int i);
 };
 

@@ -19,8 +19,8 @@ float Perceptron::RandomFloat()
 
 void Perceptron::Initialize()
 {
-	weights = std::vector<float>(7, 0.f);
-	for (int i=0;i<7;i++)
+	weights = std::vector<float>(14, 0.f);
+	for (int i=0;i<14;i++)
 	{
 		weights[i] = RandomFloat();
 	}
@@ -30,7 +30,7 @@ float Perceptron::GetOutput(std::vector<float> inputs)
 {
 	float output = 0.f;
 	int i = 0;
-	for (int i=0;i<7;i++)
+	for (int i=0;i<14;i++)
 	{
 		output += inputs[i]*weights[i];
 		i++;

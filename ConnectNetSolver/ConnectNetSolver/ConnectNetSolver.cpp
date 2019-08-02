@@ -24,7 +24,7 @@ int main()
 	std::string input;
 	std::cout << "Welcome to ConnectNetSolver! Please choose an option:\n";
 	do {
-		std::cout << "train, challenge, spectate, clone, help, or quit.\n";
+		std::cout << "train, compare, challenge, spectate, clone, help, or quit.\n";
 		input = GetInput();
 		if (input == "train")
 		{
@@ -38,6 +38,14 @@ int main()
 			catch(const std::invalid_argument& invArg){
 				std::cout << "invalid input!\n";
 			}
+		}
+		else if (input == "compare")
+		{
+			std::cout << "enter the name of the first ai.\n";
+			std::string league1Name = GetInput();
+			std::cout << "enter the name of the second ai.\n";
+			std::string league2Name = GetInput();
+			teacher.InterLeagueTest(league1Name, league2Name);
 		}
 		else if (input == "challenge")
 		{
@@ -63,6 +71,7 @@ int main()
 		else if (input == "help")
 		{
 			std::cout << "train: allow the selected AI to practice against each other for n generations.\nIf no AI exists by that name, create a new one.";
+			std::cout << "compare: have 2 AIs play against each other and print their aggreagate scores\n";
 			std::cout << "challenge: play against the selected AI.\n"; 
 			std::cout << "spectate: watch 2 AI from the selected group play against each other\n";
 			std::cout << "clone: save a copy of the chosen AI with a new name\n";

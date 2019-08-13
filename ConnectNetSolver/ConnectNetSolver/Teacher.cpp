@@ -27,15 +27,15 @@ void Teacher::Generations(std::string leagueName, int numGenerations)
 void Teacher::ExhibitionMatch(std::string leagueName)
 {
 	LoadLeague(leagueName);
-	GameModerator moderator = GameModerator();
+	GameModerator moderator;
 	moderator.PlayExhibitionGame(&league[0], &league[1]);
 }
 
 void Teacher::Challenge(std::string leagueName)
 {
 	LoadLeague(leagueName);
-	HumanConnectFourPlayer player = HumanConnectFourPlayer();
-	GameModerator moderator = GameModerator();
+	HumanConnectFourPlayer player;
+	GameModerator moderator;
 	moderator.PlayVersusHuman(&player, &league[0]);
 }
 
@@ -48,7 +48,7 @@ void Teacher::InterLeagueTest(std::string league1, std::string league2)
 		challengerLeague[i] = AIConnectFourPlayer();
 		challengerLeague[i].ReadFromFile(league2 + std::to_string(i));
 	}
-	GameModerator moderator = GameModerator();
+	GameModerator moderator;
 	long league1score=0;
 	long league2score = 0;
 	for (int i = 0; i < LEAGUE_SIZE; i++)
@@ -93,7 +93,7 @@ void Teacher::Generation()
 
 void Teacher::ScheduleLearningGame(AIConnectFourPlayer* player1, AIConnectFourPlayer* player2)
 {
-	GameModerator moderator = GameModerator();
+	GameModerator moderator;
 	moderator.PlayLearningGame(player1,player2);
 	player1->RefineNet();
 	player2->RefineNet();

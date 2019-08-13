@@ -19,8 +19,8 @@ std::string GetInput()
 }
 int main()
 {
-	srand(time(NULL));
-	Teacher teacher = Teacher();
+	srand(time(nullptr));
+	Teacher teacher;
 	std::string input;
 	std::cout << "Welcome to ConnectNetSolver! Please choose an option:\n";
 	do {
